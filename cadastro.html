@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-bt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+</head>
+<body>
+    <h1>Cadastro ONG Patas Amigas</h1>
+
+    <form>
+       <label for="campo_nome">Nome:</label>
+       <input id="campo_nome" type="text" placeholder="Nome Completo" required> 
+
+       <label for="campo_email">Email:</label>
+       <input id="campo_email" type="email" placeholder="E-mail" required>
+
+       <label for="campo_cpf">CPF:</label>
+       <input id="campo_cpf" type="text" placeholder="000.000.000-00" required maxlength="14">
+
+       
+    <br><br>
+
+       <label for="campo_telefone">Telefone </label>
+       <input id="campo_telefone" type="tel" placeholder="(xx) xxxxx-xxxx" required maxlength="15">
+
+       <label for="campo_data_nascimento">Data de Nascimento</label>
+       <input id="campo_data_nascimento" type="date" required>
+
+       <br><br>
+
+       <label for="campo_endereco">Endereço:</label>
+       <input id="campo_endereco" type="text" placeholder="Rua, Número, Bairro, Cidade, Estado" required>
+
+       <label for="campo_cep">CEP:</label>
+       <input id="campo_cep" type="text" placeholder="00000-000" required maxlength="9">
+
+       <label for="campo_cidade">Cidade:</label>
+       <input id="campo_cidade" type="text" placeholder="Sua Cidade" required>
+
+       <label for="estado">Estado (UF):</label>
+            <select id="estado" name="estado" required>
+                <option value="" disabled selected>Selecione</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+
+       
+    
+<br><br>
+       <input type="submit" value="Enviar Cadastro">
+
+    </form><br>
+    <hr><br>
+
+    <img src="Img/ft3.jpeg" width="246" alt="Trabalho voluntario">
+    <br><br>
+    <a href="index.html">Voltar para pagina Inicial</a>
+</body>
+</html>
