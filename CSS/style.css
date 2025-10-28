@@ -1,0 +1,944 @@
+/* =======================================
+   1. SISTEMA DE DESIGN (CSS Variables)
+   ======================================= */
+:root {
+    /* PALETA DE CORES (Mínimo de 8 cores) */
+    --cor-primaria: #4CAF50;    /* Verde Esperança (Ações Principais) */
+    --cor-secundaria: #FF9800;  /* Laranja Acolhedor (Destaques/Adote) */
+    
+    /* Neutras */
+    --cor-neutra-clara: #F8F8F8; /* Fundo principal */
+    --cor-neutra-media: #CCCCCC; /* Bordas e divisores */
+    --cor-neutra-escura: #333333; /* Texto principal */
+    
+    /* Feedback */
+    --cor-sucesso: #28a745;     /* Verde Claro */
+    --cor-erro: #dc3545;        /* Vermelho */
+    --cor-info: #17a2b8;        /* Azul Claro */
+
+    /* TIPOGRAFIA HIERÁRQUICA (Mínimo de 5 tamanhos) */
+    --fonte-principal: 'Roboto', sans-serif;
+    --fonte-titulos: 'Montserrat', sans-serif;
+    
+    --tamanho-fonte-xl: 3.0rem; /* H1 */
+    --tamanho-fonte-lg: 2.0rem; /* H2 */
+    --tamanho-fonte-md: 1.5rem; /* H3 */
+    --tamanho-fonte-base: 1.0rem; /* Padrão (P, Input) */
+    --tamanho-fonte-sm: 0.875rem; /* Small (Badges, Rodapé) */
+
+    /* SISTEMA DE ESPAÇAMENTO MODULAR (Múltiplos de 8px) */
+    --espacamento-xs: 8px;
+    --espacamento-sm: 16px;
+    --espacamento-md: 24px;
+    --espacamento-lg: 32px;
+    --espacamento-xl: 48px;
+    --espacamento-xxl: 64px;
+    
+    /* Outros */
+    --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Base e Reset */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-fonte-base);
+    line-height: 1.6;
+    color: var(--cor-neutra-escura);
+    background-color: var(--cor-neutra-clara);
+    min-height: 100vh;
+}
+
+h1, h2, h3 {
+    font-family: var(--fonte-titulos);
+    color: var(--cor-primaria);
+    margin-bottom: var(--espacamento-sm);
+}
+
+h1 { font-size: var(--tamanho-fonte-xl); }
+h2 { font-size: var(--tamanho-fonte-lg); }
+h3 { font-size: var(--tamanho-fonte-md); }
+
+p {
+    margin-bottom: var(--espacamento-sm);
+}
+
+a {
+    color: var(--cor-primaria);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* =======================================
+   2. LEIAUTE RESPONSIVO GERAL (GRID)
+   ======================================= */
+
+/* Leiaute Principal com CSS Grid */
+.container-grid {
+    display: grid;
+    /* Define as áreas principais: cabeçalho, conteúdo principal e rodapé */
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: auto 1fr auto; /* header e footer são automáticos, main pega o restante */
+    min-height: 100vh;
+    overflow-x: hidden; /* Previne scroll horizontal em mobile */
+}
+
+/* Wrapper para centralizar conteúdo */
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--espacamento-sm);
+}
+
+/* Sistema de Grid Customizado de 12 Colunas (Para conteúdo interno) */
+.grid-row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--espacamento-md);
+    margin-bottom: var(--espacamento-lg);
+}
+
+/* Classes de Colunas (Mobile First: sempre 12 colunas) */
+.col-12 { grid-column: span 12; }
+.col-6 { grid-column: span 12; } /* Mobile */
+.col-4 { grid-column: span 12; } /* Mobile */
+
+
+/* =======================================
+   3. NAVEGAÇÃO SOFISTICADA E INTERATIVA
+   ======================================= */
+header {
+    grid-area: header;
+    background-color: var(--cor-primaria);
+    padding: var(--espacamento-sm) 0;
+    box-shadow: var(--sombra-card);
+}
+
+header h1 {
+    color: white;
+    font-size: var(--tamanho-fonte-lg);
+    margin: 0;
+}
+
+/* Nav Desktop (Flexbox) */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex; /* Flexbox para alinhar os links */
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    position: relative;
+    margin-left: var(--espacamento-md);
+}
+
+nav a {
+    color: white;
+    font-weight: bold;
+    padding: var(--espacamento-xs) var(--espacamento-sm);
+    display: block;
+    transition: background-color 0.3s;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+}
+
+/* Dropdown (Exemplo) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: var(--sombra-card);
+    z-index: 1;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: var(--cor-neutra-escura);
+    padding: var(--espacamento-xs);
+}
+
+.dropdown-content a:hover {
+    background-color: var(--cor-neutra-clara);
+}
+
+/* Menu Hamburguer e Mobile Nav */
+.hamburger-menu {
+    display: none; /* Esconde no desktop */
+    font-size: var(--tamanho-fonte-lg);
+    cursor: pointer;
+    color: white;
+}
+
+/* --------------------------------------
+   4. COMPONENTES DE INTERFACE
+   -------------------------------------- */
+
+/* BOTÕES com Estados Visuais */
+.btn {
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: var(--tamanho-fonte-base);
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.1s, opacity 0.3s;
+    display: inline-block;
+}
+
+/* Primário (ONG) */
+.btn-primary {
+    background-color: var(--cor-secundaria); /* Laranja Destaque */
+    color: white;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: color-mix(in srgb, var(--cor-secundaria) 90%, black);
+}
+.btn-primary:active {
+    transform: scale(0.98);
+}
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Secundário (Ex: Voltar) */
+.btn-secondary {
+    background-color: var(--cor-neutra-media);
+    color: var(--cor-neutra-escura);
+}
+
+/* CARDS Responsivos (Para projeto.html) */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: var(--sombra-card);
+    padding: var(--espacamento-md);
+    display: flex;
+    flex-direction: column;
+}
+.card h3 {
+    color: var(--cor-secundaria);
+}
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: var(--espacamento-sm);
+}
+
+/* BADGES e TAGS */
+.badge {
+    display: inline-block;
+    padding: 4px var(--espacamento-xs);
+    border-radius: var(--espacamento-xs);
+    font-size: var(--tamanho-fonte-sm);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 5px;
+}
+
+.badge-info {
+    background-color: var(--cor-info);
+    color: white;
+}
+.badge-success {
+    background-color: var(--cor-sucesso);
+    color: white;
+}
+
+/* FORMULÁRIOS Estilizados e Validação Visual (cadastro.html) */
+.form-container {
+    background-color: white;
+    padding: var(--espacamento-lg);
+    border-radius: 10px;
+    box-shadow: var(--sombra-card);
+}
+
+.form-group {
+    display: flex; /* Flexbox para estrutura interna */
+    flex-direction: column;
+    margin-bottom: var(--espacamento-sm);
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input, .form-select {
+    padding: var(--espacamento-xs);
+    border: 1px solid var(--cor-neutra-media);
+    border-radius: 4px;
+    font-size: var(--tamanho-fonte-base);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); /* Sombra suave Verde */
+}
+
+/* Validação Visual (Erro) */
+.form-group.error .form-input, .form-group.error .form-select {
+    border-color: var(--cor-erro);
+}
+
+/* Componente de Feedback (Alerts) */
+.alert {
+    padding: var(--espacamento-sm);
+    margin-bottom: var(--espacamento-sm);
+    border-radius: 4px;
+    font-weight: bold;
+}
+.alert-error {
+    background-color: color-mix(in srgb, var(--cor-erro) 10%, white);
+    color: var(--cor-erro);
+    border: 1px solid var(--cor-erro);
+}
+
+/* --------------------------------------
+   5. RODAPÉ (Footer)
+   -------------------------------------- */
+footer {
+    grid-area: footer;
+    background-color: var(--cor-neutra-escura);
+    color: var(--cor-neutra-media);
+    text-align: center;
+    padding: var(--espacamento-sm) 0;
+    font-size: var(--tamanho-fonte-sm);
+}
+
+/* --------------------------------------
+   6. BREAKPOINTS RESPONSIVOS (MÍNIMO 5)
+   -------------------------------------- */
+
+/* Breakpoint 1: Mobile S (Padrão: 320px) - Estilos definidos acima */
+
+/* Breakpoint 2: Mobile M (>= 576px) */
+@media (min-width: 576px) {
+    .wrapper {
+        padding: 0 var(--espacamento-lg);
+    }
+}
+
+/* Breakpoint 3: Tablet (>= 768px) */
+@media (min-width: 768px) {
+    /* Layout: Ativa a navegação desktop e o Grid de 12 colunas */
+    
+    .hamburger-menu {
+        display: none; 
+    }
+    
+    /* Colunas: 6/12 no tablet */
+    .col-md-6 { grid-column: span 6; }
+    .col-md-4 { grid-column: span 4; }
+    .col-md-8 { grid-column: span 8; } 
+    
+    /* Configurações específicas para o cadastro */
+    .form-cadastro-layout {
+        grid-column: 3 / span 8; /* Centraliza o formulário */
+    }
+}
+
+/* Breakpoint 4: Desktop S (>= 992px) */
+@media (min-width: 992px) {
+    header h1 {
+        font-size: var(--tamanho-fonte-xl);
+    }
+    
+    /* Colunas: 4/12 no desktop */
+    .col-lg-4 { grid-column: span 4; }
+    .col-lg-3 { grid-column: span 3; }
+    
+    .form-cadastro-layout {
+        grid-column: 4 / span 6; /* Mais estreito no centro */
+    }
+}
+
+/* Breakpoint 5: Desktop L (>= 1200px) */
+@media (min-width: 1200px) {
+    .col-xl-3 { grid-column: span 3; }
+}
+
+/* Estilos Mobile (Ativados quando a largura é menor que 768px) */
+@media (max-width: 767px) {
+    .hamburger-menu {
+        display: block; /* Mostra o ícone */
+    }
+    nav ul {
+        display: none; /* Esconde o menu desktop */
+        flex-direction: column;
+        width: 100%;
+        background-color: color-mix(in srgb, var(--cor-primaria) 90%, black);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        text-align: center;
+    }
+    /* Classe adicionada por JS para mostrar o menu */
+    nav.open ul {
+        display: flex; 
+    }
+    nav li {
+        margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+/* =======================================
+   1. SISTEMA DE DESIGN (CSS Variables)
+   ======================================= */
+:root {
+    /* PALETA DE CORES (Mínimo de 8 cores) */
+    --cor-primaria: #4CAF50;    /* Verde Esperança (Ações Principais) */
+    --cor-secundaria: #FF9800;  /* Laranja Acolhedor (Destaques/Adote) */
+    
+    /* Neutras */
+    --cor-neutra-clara: #F8F8F8; /* Fundo principal */
+    --cor-neutra-media: #CCCCCC; /* Bordas e divisores */
+    --cor-neutra-escura: #333333; /* Texto principal */
+    
+    /* Feedback */
+    --cor-sucesso: #28a745;     /* Verde Claro */
+    --cor-erro: #dc3545;        /* Vermelho */
+    --cor-info: #17a2b8;        /* Azul Claro */
+
+    /* TIPOGRAFIA HIERÁRQUICA (Mínimo de 5 tamanhos) */
+    --fonte-principal: 'Roboto', sans-serif;
+    --fonte-titulos: 'Montserrat', sans-serif;
+    
+    --tamanho-fonte-xl: 3.0rem; /* H1 */
+    --tamanho-fonte-lg: 2.0rem; /* H2 */
+    --tamanho-fonte-md: 1.5rem; /* H3 */
+    --tamanho-fonte-base: 1.0rem; /* Padrão (P, Input) */
+    --tamanho-fonte-sm: 0.875rem; /* Small (Badges, Rodapé) */
+
+    /* SISTEMA DE ESPAÇAMENTO MODULAR (Múltiplos de 8px) */
+    --espacamento-xs: 8px;
+    --espacamento-sm: 16px;
+    --espacamento-md: 24px;
+    --espacamento-lg: 32px;
+    --espacamento-xl: 48px;
+    --espacamento-xxl: 64px;
+    
+    /* Outros */
+    --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Base e Reset */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    font-size: var(--tamanho-fonte-base);
+    line-height: 1.6;
+    color: var(--cor-neutra-escura);
+    background-color: var(--cor-neutra-clara);
+    min-height: 100vh;
+}
+
+h1, h2, h3 {
+    font-family: var(--fonte-titulos);
+    color: var(--cor-primaria);
+    margin-bottom: var(--espacamento-sm);
+}
+
+h1 { font-size: var(--tamanho-fonte-xl); }
+h2 { font-size: var(--tamanho-fonte-lg); }
+h3 { font-size: var(--tamanho-fonte-md); }
+
+p {
+    margin-bottom: var(--espacamento-sm);
+}
+
+a {
+    color: var(--cor-primaria);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* =======================================
+   2. LEIAUTE RESPONSIVO GERAL (GRID)
+   ======================================= */
+
+/* Leiaute Principal com CSS Grid */
+.container-grid {
+    display: grid;
+    /* Define as áreas principais: cabeçalho, conteúdo principal e rodapé */
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-rows: auto 1fr auto; /* header e footer são automáticos, main pega o restante */
+    min-height: 100vh;
+    overflow-x: hidden; /* Previne scroll horizontal em mobile */
+}
+
+/* Wrapper para centralizar conteúdo */
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--espacamento-sm);
+}
+
+/* Sistema de Grid Customizado de 12 Colunas (Para conteúdo interno) */
+.grid-row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--espacamento-md);
+    margin-bottom: var(--espacamento-lg);
+}
+
+/* Classes de Colunas (Mobile First: sempre 12 colunas) */
+.col-12 { grid-column: span 12; }
+.col-6 { grid-column: span 12; } /* Mobile */
+.col-4 { grid-column: span 12; } /* Mobile */
+
+
+/* =======================================
+   3. NAVEGAÇÃO SOFISTICADA E INTERATIVA
+   ======================================= */
+header {
+    grid-area: header;
+    background-color: var(--cor-primaria);
+    padding: var(--espacamento-sm) 0;
+    box-shadow: var(--sombra-card);
+}
+
+header h1 {
+    color: white;
+    font-size: var(--tamanho-fonte-lg);
+    margin: 0;
+}
+
+/* Nav Desktop (Flexbox) */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex; /* Flexbox para alinhar os links */
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    position: relative;
+    margin-left: var(--espacamento-md);
+}
+
+nav a {
+    color: white;
+    font-weight: bold;
+    padding: var(--espacamento-xs) var(--espacamento-sm);
+    display: block;
+    transition: background-color 0.3s;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+}
+
+/* Dropdown (Exemplo) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: var(--sombra-card);
+    z-index: 1;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: var(--cor-neutra-escura);
+    padding: var(--espacamento-xs);
+}
+
+.dropdown-content a:hover {
+    background-color: var(--cor-neutra-clara);
+}
+
+/* Menu Hamburguer e Mobile Nav */
+.hamburger-menu {
+    display: none; /* Esconde no desktop */
+    font-size: var(--tamanho-fonte-lg);
+    cursor: pointer;
+    color: white;
+}
+
+/* --------------------------------------
+   4. COMPONENTES DE INTERFACE
+   -------------------------------------- */
+
+/* BOTÕES com Estados Visuais */
+.btn {
+    padding: var(--espacamento-sm) var(--espacamento-md);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: var(--tamanho-fonte-base);
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.1s, opacity 0.3s;
+    display: inline-block;
+}
+
+/* Primário (ONG) */
+.btn-primary {
+    background-color: var(--cor-secundaria); /* Laranja Destaque */
+    color: white;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: color-mix(in srgb, var(--cor-secundaria) 90%, black);
+}
+.btn-primary:active {
+    transform: scale(0.98);
+}
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Secundário (Ex: Voltar) */
+.btn-secondary {
+    background-color: var(--cor-neutra-media);
+    color: var(--cor-neutra-escura);
+}
+
+/* CARDS Responsivos (Para projeto.html) */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: var(--sombra-card);
+    padding: var(--espacamento-md);
+    display: flex;
+    flex-direction: column;
+}
+.card h3 {
+    color: var(--cor-secundaria);
+}
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: var(--espacamento-sm);
+}
+
+/* BADGES e TAGS */
+.badge {
+    display: inline-block;
+    padding: 4px var(--espacamento-xs);
+    border-radius: var(--espacamento-xs);
+    font-size: var(--tamanho-fonte-sm);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 5px;
+}
+
+.badge-info {
+    background-color: var(--cor-info);
+    color: white;
+}
+.badge-success {
+    background-color: var(--cor-sucesso);
+    color: white;
+}
+
+/* FORMULÁRIOS Estilizados e Validação Visual (cadastro.html) */
+.form-container {
+    background-color: white;
+    padding: var(--espacamento-lg);
+    border-radius: 10px;
+    box-shadow: var(--sombra-card);
+}
+
+.form-group {
+    display: flex; /* Flexbox para estrutura interna */
+    flex-direction: column;
+    margin-bottom: var(--espacamento-sm);
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input, .form-select {
+    padding: var(--espacamento-xs);
+    border: 1px solid var(--cor-neutra-media);
+    border-radius: 4px;
+    font-size: var(--tamanho-fonte-base);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); /* Sombra suave Verde */
+}
+
+/* Validação Visual (Erro) */
+.form-group.error .form-input, .form-group.error .form-select {
+    border-color: var(--cor-erro);
+}
+
+/* Componente de Feedback (Alerts) */
+.alert {
+    padding: var(--espacamento-sm);
+    margin-bottom: var(--espacamento-sm);
+    border-radius: 4px;
+    font-weight: bold;
+}
+.alert-error {
+    background-color: color-mix(in srgb, var(--cor-erro) 10%, white);
+    color: var(--cor-erro);
+    border: 1px solid var(--cor-erro);
+}
+
+/* --------------------------------------
+   5. RODAPÉ (Footer)
+   -------------------------------------- */
+footer {
+    grid-area: footer;
+    background-color: var(--cor-neutra-escura);
+    color: var(--cor-neutra-media);
+    text-align: center;
+    padding: var(--espacamento-sm) 0;
+    font-size: var(--tamanho-fonte-sm);
+}
+
+/* --------------------------------------
+   6. BREAKPOINTS RESPONSIVOS (MÍNIMO 5)
+   -------------------------------------- */
+
+/* Breakpoint 1: Mobile S (Padrão: 320px) - Estilos definidos acima */
+
+/* Breakpoint 2: Mobile M (>= 576px) */
+@media (min-width: 576px) {
+    .wrapper {
+        padding: 0 var(--espacamento-lg);
+    }
+}
+
+/* Breakpoint 3: Tablet (>= 768px) */
+@media (min-width: 768px) {
+    /* Layout: Ativa a navegação desktop e o Grid de 12 colunas */
+    
+    .hamburger-menu {
+        display: none; 
+    }
+    
+    /* Colunas: 6/12 no tablet */
+    .col-md-6 { grid-column: span 6; }
+    .col-md-4 { grid-column: span 4; }
+    .col-md-8 { grid-column: span 8; } 
+    
+    /* Configurações específicas para o cadastro */
+    .form-cadastro-layout {
+        grid-column: 3 / span 8; /* Centraliza o formulário */
+    }
+}
+
+/* Breakpoint 4: Desktop S (>= 992px) */
+@media (min-width: 992px) {
+    header h1 {
+        font-size: var(--tamanho-fonte-xl);
+    }
+    
+    /* Colunas: 4/12 no desktop */
+    .col-lg-4 { grid-column: span 4; }
+    .col-lg-3 { grid-column: span 3; }
+    
+    .form-cadastro-layout {
+        grid-column: 4 / span 6; /* Mais estreito no centro */
+    }
+}
+
+/* Breakpoint 5: Desktop L (>= 1200px) */
+@media (min-width: 1200px) {
+    .col-xl-3 { grid-column: span 3; }
+}
+
+/* Estilos Mobile (Ativados quando a largura é menor que 768px) */
+@media (max-width: 767px) {
+    .hamburger-menu {
+        display: block; /* Mostra o ícone */
+    }
+    nav ul {
+        display: none; /* Esconde o menu desktop */
+        flex-direction: column;
+        width: 100%;
+        background-color: color-mix(in srgb, var(--cor-primaria) 90%, black);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        text-align: center;
+    }
+    /* Classe adicionada por JS para mostrar o menu */
+    nav.open ul {
+        display: flex; 
+    }
+    nav li {
+        margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+/* Estilo específico para o slogan dentro do header */
+header p {
+    /* 1. Tipografia e Tamanho */
+    font-size: var(--tamanho-fonte-md, 1.5rem); /* Tamanho maior para destaque */
+    font-style: italic; /* Adiciona um estilo elegante de slogan */
+    font-weight: 300; /* Deixa a fonte mais fina, se a fonte suportar */
+    
+    /* 2. Cores e Alinhamento */
+    color: white; /* Cor branca para contraste com o fundo do header */
+    text-align: center; /* Centraliza o slogan */
+    
+    /* 3. Espaçamento */
+    margin: var(--espacamento-xs, 8px) 0 0 0; /* Pequena margem superior (8px) para separar do H1 */
+    padding-bottom: var(--espacamento-sm, 16px); /* Adiciona um padding na parte inferior do header (se o p for o último elemento) */
+    opacity: 0.9; /* Deixa o slogan ligeiramente mais suave que o h1 */
+}
+/* =======================================
+   Ajustes para Imagem Desproporcional e Posicionamento
+   ======================================= */
+
+/* 1. Estilização da Imagem de Destaque */
+.img-destaque-voluntario {
+    width: 100%; /* Garante que a imagem preencha a largura da sua coluna */
+    max-width: 100%;
+    
+    /* Configuração de altura para manter a proporção visualmente (pode ser ajustada) */
+    height: 300px; /* Altura fixa ou semi-fixa para dar uniformidade */
+    
+    display: block;
+    border-radius: 8px; 
+    box-shadow: var(--sombra-card, 0 4px 12px rgba(0, 0, 0, 0.08)); 
+    
+    /* CRUCIAL: Garante que a imagem cubra a área de 300px sem esticar ou achatar */
+    object-fit: cover; 
+    
+    /* CRUCIAL: Se a imagem estiver flutuando, anule margens extras */
+    margin: 0; 
+}
+
+/* 2. Ajuste de Posicionamento Vertical da Imagem (usando a coluna) */
+
+/* Aplica Flexbox à coluna que contém a imagem para alinhamento vertical */
+.grid-row .col-lg-4 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente o conteúdo (a imagem) */
+    align-items: center; /* Centraliza horizontalmente o conteúdo (a imagem) */
+}
+
+/* 3. Ajuste para o Card (Texto) se for necessário alinhar o texto com a imagem */
+/* Aplicamos Flexbox também na coluna do texto (col-lg-8) para que ela se estique
+   e alinhe seu conteúdo com o centro da imagem, se o texto for curto. */
+.grid-row .col-lg-8 {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; /* Descomente se quiser centralizar o texto verticalmente */
+}
+
+/* 4. Garantir visualização em telas menores */
+@media (max-width: 991px) {
+    .img-destaque-voluntario {
+        height: auto; /* Remove a altura fixa em mobile para a imagem se ajustar naturalmente */
+        margin-top: var(--espacamento-md, 24px); 
+    }
+    .grid-row .col-lg-4 {
+        display: block; /* Volta ao comportamento padrão de bloco em mobile */
+    }
+}
+
+/* =======================================
+   ESTILIZAÇÃO DA IMAGEM DE CADASTRO (.img-cadastro)
+   ======================================= */
+
+.img-cadastro {
+    /* 1. Responsividade e Tamanho */
+    width: 100%;             /* A imagem ocupa toda a largura disponível no container */
+    max-width: 300px;        /* Limita a largura máxima da imagem (pode ser ajustado) */
+    height: auto;            /* A altura se ajusta automaticamente para manter a proporção */
+    display: block;          /* Garante que a imagem se comporte como bloco para margens */
+
+    /* 2. Visual Moderno */
+    border-radius: 12px;     /* Borda arredondada suave */
+    
+    /* 3. Efeito de Destaque */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Sombra mais destacada */
+    
+    /* 4. Espaçamento */
+    margin: var(--espacamento-md) auto; /* Centraliza horizontalmente (auto) e adiciona margem superior/inferior */
+
+    /* 5. Ajuste de Preenchimento (Importante para evitar distorção) */
+    /* Se você quiser forçar uma altura e cortar a imagem para preenchê-la: */
+    /* height: 200px; 
+    object-fit: cover; */
+    
+    /* Se preferir que ela se ajuste naturalmente: */
+    object-fit: contain; /* Ajusta a imagem inteira dentro do espaço sem cortar */
+}
+
+/* Estilo específico para Agrupamento Lógico (fieldset e legend) */
+
+fieldset {
+    /* Retira a borda padrão para dar um visual mais moderno,
+       mas você pode mantê-la ou estilizá-la de forma sutil. */
+    border: 1px solid var(--cor-neutra-media); 
+    border-radius: 8px;
+    padding: var(--espacamento-md);
+    margin-bottom: var(--espacamento-lg);
+}
+
+legend {
+    /* Estiliza o título do agrupamento */
+    font-size: var(--tamanho-fonte-md); /* Tamanho H3 */
+    font-weight: bold;
+    color: var(--cor-secundaria); /* Usa a cor de destaque (Laranja) */
+    padding: 0 var(--espacamento-xs);
+    /* Desloca a legenda ligeiramente para fora da fieldset */
+    margin-left: -8px; 
+}

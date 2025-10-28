@@ -1,50 +1,76 @@
 <!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
+    <link rel="stylesheet" href="CSS/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Usuário da ONG Patas Amigas</title>
+    <title>ONG Patas Amigas - Quem Somos e Contato</title>
 </head>
-<body>
+<body class="container-grid">
     <header>
-        <h1>Usuário da ONG</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="projeto.html">Projeto</a></li>
-                <li><a href="cadastro.html">Cadastro</a></li>
-            </ul>    
-            
-        </nav>
+        <div class="wrapper nav-container">
+            <h1>ONG Patas Amigas</h1> 
+            <span class="hamburger-menu" onclick="toggleMenu()">☰</span>
 
-
+            <nav>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li class="dropdown">
+                        <a href="#">Apoie-Nos ▼</a>
+                        <div class="dropdown-content">
+                            <a href="cadastro.html">Voluntariado</a>
+                        </div>  
+                    </li>
+                    <li><a href="projeto.html">Projeto</a></li>
+                    <li><a href="cadastro.html">Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
+
     <main>
-        <section>
-            <h2>Quem Somos</h2>
-            <p>Nós, da ONG Patas Amigas, não somos apenas um grupo de voluntários; somos uma ponte de esperança para aqueles que não têm voz. Nascemos da indignação diante do cenário de abandono, negligência e crueldade que vitimiza milhões de animais anualmente. Nossa existência é a manifestação de uma profunda convicção: a de que todo ser vivo merece dignidade, cuidado e uma chance de amar e ser amado.</p>
-            <p>Em essência, somos uma Organização Não-Governamental dedicada ao resgate, reabilitação e realocação de cães e gatos (e/ou outros animais, se for o caso) em situação de risco. Agimos onde a dor é mais aguda, retirando animais de situações de maus-tratos, acidentes ou de vidas solitárias nas ruas.</p>
-            <img src="Img/ft1.jpeg" width="246" alt="Voluntários em ação">
-        </section>
-        
-        <section>
-            <h2>Missão da ONG Patas Amigas</h2>
-            <p>A nossa Missão é um juramento de amor e serviço. Ela exige resiliência, transparência e a colaboração contínua da comunidade. A cada animal que volta a abanar o rabo, a cada ferida que cicatriza, a cada lar encontrado, reafirmamos que a nossa Missão está sendo cumprida: provar que o valor de uma sociedade se mede pela forma como ela trata os seus mais vulneráveis.</p>
-        </section>
+        <div class="wrapper">
+            
+            <section class="grid-row">
+                <div class="col-12 col-md-8">
+                    <h2>Quem Somos <span class="badge badge-info">ONG</span></h2>
+                    <p>Nós, da ONG Patas Amigas, não somos apenas um grupo de voluntários; somos uma ponte de esperança para aqueles que não têm voz. Nascemos da indignação diante do cenário de abandono, negligência e crueldade que vitimiza milhões de animais anualmente. Nossa existência é a manifestação de uma profunda convicção: a de que todo ser vivo merece dignidade, cuidado e uma chance de amar e ser amado.</p>
+                    <p>Em essência, somos uma Organização Não-Governamental dedicada ao resgate, reabilitação e realocação de cães e gatos (e/ou outros animais, se for o caso) em situação de risco. Agimos onde a dor é mais aguda, retirando animais de situações de maus-tratos, acidentes ou de vidas solitárias nas ruas.</p>
+                    <img src="Img/ft1.jpeg" width="246" alt="Voluntários em ação">
+                </div>
+            </section>
+            
+            <section class="grid-row">
+                <div class="col-12">
+                    <h2>Missão da ONG Patas Amigas</h2>
+                    <p>A nossa Missão é um juramento de amor e serviço. Ela exige resiliência, transparência e a colaboração contínua da comunidade. A cada animal que volta a abanar o rabo, a cada ferida que cicatriza, a cada lar encontrado, reafirmamos que a nossa Missão está sendo cumprida: provar que o valor de uma sociedade se mede pela forma como ela trata os seus mais vulneráveis.</p>
+                </div>
+            </section>
 
-        <section>
-            <h2>Contato com a ONG Patas Amigas</h2>
-            <address>
-                <p>Endereço: Rua passagem Bingo, 123 - Bairro Bela Vista - São Paulo/SP</p>
-                <p>Telefone: (11) 99999-9999</p>
-                <p>Email: contato@organizaçãoongpatasamigas.com</p>
-            </address>
+            <section class="grid-row">
+                <div class="col-12">
+                    <h2>Contato com a ONG Patas Amigas</h2>
+                    <address>
+                        <p>Endereço: Rua passagem Bingo, 123 - Bairro Bela Vista - São Paulo/SP</p>
+                        <p>Telefone: (11) 99999-9999</p>
+                        <p>Email: contato@organizaçãoongpatasamigas.com</p>
+                    </address>
+                </div>
+            </section>
 
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 ONG Patas Amigas</p>
+        </div> 
+    </main> <footer>
+        <div class="wrapper">
+            <p>&copy; 2025 ONG Patas Amigas</p>
+        </div>
     </footer>
+
+    <script>
+    function toggleMenu() {
+        const nav = document.querySelector('nav');
+        nav.classList.toggle('open');
+    }
+    </script>
+
 </body>
 </html>

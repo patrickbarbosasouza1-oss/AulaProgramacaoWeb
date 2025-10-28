@@ -1,85 +1,133 @@
 <!DOCTYPE html>
-<html lang="pt-bt">
+<html lang="pt-BR"> 
 
 <head>
+    <link rel="stylesheet" href="CSS/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
 </head>
-<body>
-    <h1>Cadastro ONG Patas Amigas</h1>
-
-    <form>
-       <label for="campo_nome">Nome:</label>
-       <input id="campo_nome" type="text" placeholder="Nome Completo" required> 
-
-       <label for="campo_email">Email:</label>
-       <input id="campo_email" type="email" placeholder="E-mail" required>
-
-       <label for="campo_cpf">CPF:</label>
-       <input id="campo_cpf" type="text" placeholder="000.000.000-00" required maxlength="14">
-
-       
-    <br><br>
-
-       <label for="campo_telefone">Telefone </label>
-       <input id="campo_telefone" type="tel" placeholder="(xx) xxxxx-xxxx" required maxlength="15">
-
-       <label for="campo_data_nascimento">Data de Nascimento</label>
-       <input id="campo_data_nascimento" type="date" required>
-
-       <br><br>
-
-       <label for="campo_endereco">Endereço:</label>
-       <input id="campo_endereco" type="text" placeholder="Rua, Número, Bairro, Cidade, Estado" required>
-
-       <label for="campo_cep">CEP:</label>
-       <input id="campo_cep" type="text" placeholder="00000-000" required maxlength="9">
-
-       <label for="campo_cidade">Cidade:</label>
-       <input id="campo_cidade" type="text" placeholder="Sua Cidade" required>
-
-       <label for="estado">Estado (UF):</label>
-            <select id="estado" name="estado" required>
-                <option value="" disabled selected>Selecione</option>
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-
-       
+<body class="container-grid">
     
-<br><br>
-       <input type="submit" value="Enviar Cadastro">
+    <main> 
+        <div class="wrapper grid-row">
+            <div class="col-12 form-cadastro-layout">
 
-    </form><br>
-    <hr><br>
+                <div class="form-container">
+                    <h1>Cadastro ONG Patas Amigas</h1>
 
-    <img src="Img/ft3.jpeg" width="246" alt="Trabalho voluntario">
-    <br><br>
-    <a href="index.html">Voltar para pagina Inicial</a>
+                    <img src="img/ft4.jpeg" width="300" alt="Cadastro Voluntário" class="img-cadastro">
+
+                    <form>
+                        <fieldset>
+                            <legend>Dados Pessoais</legend>
+                            <div class="form-group">
+                                <label for="campo_nome">Nome Completo:</label>
+                                <input id="campo_nome" type="text" class="form-input" placeholder="Nome Completo" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="campo_email">Email:</label>
+                                <input id="campo_email" type="email" class="form-input" placeholder="seu.email@exemplo.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="campo_cpf">CPF:</label>
+                                <input id="campo_cpf" type="text" class="form-input" placeholder="000.000.000-00" required 
+                                         maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" 
+                                         title="Formato de CPF: 000.000.000-00">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="campo_telefone">Telefone:</label>
+                                <input id="campo_telefone" type="tel" class="form-input" placeholder="(xx) xxxxx-xxxx" required 
+                                         maxlength="15" pattern="\(\d{2}\) \d{5}-\d{4}"
+                                         title="Formato de Telefone: (99) 99999-9999">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="campo_data_nascimento">Data de Nascimento:</label>
+                                <input id="campo_data_nascimento" type="date" class="form-input" required>
+                            </div>
+                        </fieldset>
+
+                        <fieldset style="margin-top: var(--espacamento-md);">
+                            <legend>Endereço</legend>
+                            
+                            <div class="form-group">
+                                <label for="campo_cep">CEP:</label>
+                                <input id="campo_cep" type="text" class="form-input" placeholder="00000-000" required 
+                                         maxlength="9" pattern="\d{5}-\d{3}" 
+                                         title="Formato de CEP: 00000-000">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="campo_endereco">Endereço:</label>
+                                <input id="campo_endereco" type="text" class="form-input" placeholder="Rua, Número, Bairro" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="campo_cidade">Cidade:</label>
+                                <input id="campo_cidade" type="text" class="form-input" placeholder="Sua Cidade" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="estado">Estado (UF):</label>
+                                <select id="estado" name="estado" class="form-select" required>
+                                    <option value="" disabled selected>Selecione</option>
+                                    <option value="AC">Acre</option>
+                                    <option value="AL">Alagoas</option>
+                                    <option value="AP">Amapá</option>
+                                    <option value="AM">Amazonas</option>
+                                    <option value="BA">Bahia</option>
+                                    <option value="CE">Ceará</option>
+                                    <option value="DF">Distrito Federal</option>
+                                    <option value="ES">Espírito Santo</option>
+                                    <option value="GO">Goiás</option>
+                                    <option value="MA">Maranhão</option>
+                                    <option value="MT">Mato Grosso</option>
+                                    <option value="MS">Mato Grosso do Sul</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="PA">Pará</option>
+                                    <option value="PB">Paraíba</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="PE">Pernambuco</option>
+                                    <option value="PI">Piauí</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="RN">Rio Grande do Norte</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="RO">Rondônia</option>
+                                    <option value="RR">Roraima</option>
+                                    <option value="SC">Santa Catarina</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="SE">Sergipe</option>
+                                    <option value="TO">Tocantins</option>
+                                </select>
+                            </div>
+                            
+                            <br> 
+
+                        </fieldset> <input type="submit" value="Enviar Cadastro" class="btn btn-primary" style="width: 100%;">
+
+                    </form>
+                </div>
+
+                <a href="index.html" class="btn btn-secondary" style="margin-top: 16px;">Voltar para pagina Inicial</a>
+
+            </div>
+        </div>  
+    </main> <script>
+    function toggleMenu() {
+        const nav = document.querySelector('nav');
+        nav.classList.toggle('open');
+    }
+    </script>
+
+    <footer>
+        <div class="wrapper">
+            <p>&copy; 2025 ONG Patas Amigas</p>
+        </div>
+    </footer>
+
 </body>
 </html>
