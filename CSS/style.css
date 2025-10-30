@@ -306,8 +306,11 @@ nav a:hover {
 }
 
 /* Validação Visual (Erro) */
-.form-group.error .form-input, .form-group.error .form-select {
+div.form-group.error input.form-input, 
+div.form-group.error select.form-select {
     border-color: var(--cor-erro);
+    /* Adicione um box-shadow de erro opcional para destaque */
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2); 
 }
 
 /* Componente de Feedback (Alerts) */
@@ -718,10 +721,17 @@ nav a:hover {
     box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); /* Sombra suave Verde */
 }
 
-/* Validação Visual (Erro) */
-.form-group.error .form-input, .form-group.error .form-select {
-    border-color: var(--cor-erro);
+/* Validação Visual (Erro) - CORREÇÃO DE ESPECIFICIDADE */
+.form-group.error .form-input, 
+.form-group.error .form-select {
+    
+    /* CRUCIAL: Usa !important para garantir que a borda de erro sobreponha qualquer outra regra (como :focus) */
+    border: 2px solid var(--cor-erro) !important; 
+    
+    /* Garante que o box-shadow de erro também seja aplicado com prioridade */
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5) !important; /* Usei o rgba equivalente de var(--cor-erro) para melhor compatibilidade */
 }
+
 
 /* Componente de Feedback (Alerts) */
 .alert {

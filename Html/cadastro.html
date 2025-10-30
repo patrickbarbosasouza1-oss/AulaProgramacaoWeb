@@ -18,36 +18,36 @@
 
                     <img src="../img/ft4.jpeg" width="300" alt="Cadastro Voluntário" class="img-cadastro">
 
-                    <form>
+                    <form novalidate>
                         <fieldset>
                             <legend>Dados Pessoais</legend>
                             <div class="form-group">
                                 <label for="campo_nome">Nome Completo:</label>
-                                <input id="campo_nome" type="text" class="form-input" placeholder="Nome Completo" required>
+                                <input id="campo_nome" name="nome_completo" type="text" class="form-input" placeholder="Nome Completo" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="campo_email">Email:</label>
-                                <input id="campo_email" type="email" class="form-input" placeholder="seu.email@exemplo.com" required>
+                                <input id="campo_email" name="email" type="email" class="form-input" placeholder="seu.email@exemplo.com" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="campo_cpf">CPF:</label>
-                                <input id="campo_cpf" type="text" class="form-input" placeholder="000.000.000-00" required 
+                                <input id="campo_cpf" name="cpf" type="text" class="form-input" placeholder="000.000.000-00" required 
                                          maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" 
                                          title="Formato de CPF: 000.000.000-00">
                             </div>
 
                             <div class="form-group">
                                 <label for="campo_telefone">Telefone:</label>
-                                <input id="campo_telefone" type="tel" class="form-input" placeholder="(xx) xxxxx-xxxx" required 
+                                <input id="campo_telefone" name="telefone" type="tel" class="form-input" placeholder="(xx) xxxxx-xxxx" required 
                                          maxlength="15" pattern="\(\d{2}\) \d{5}-\d{4}"
                                          title="Formato de Telefone: (99) 99999-9999">
                             </div>
 
                             <div class="form-group">
                                 <label for="campo_data_nascimento">Data de Nascimento:</label>
-                                <input id="campo_data_nascimento" type="date" class="form-input" required>
+                                <input id="campo_data_nascimento" name="data_nascimento" type="date" class="form-input" required>
                             </div>
                         </fieldset>
 
@@ -56,19 +56,19 @@
                             
                             <div class="form-group">
                                 <label for="campo_cep">CEP:</label>
-                                <input id="campo_cep" type="text" class="form-input" placeholder="00000-000" required 
+                                <input id="campo_cep" name="cep" type="text" class="form-input" placeholder="00000-000" required 
                                          maxlength="9" pattern="\d{5}-\d{3}" 
                                          title="Formato de CEP: 00000-000">
                             </div>
                             
                             <div class="form-group">
                                 <label for="campo_endereco">Endereço:</label>
-                                <input id="campo_endereco" type="text" class="form-input" placeholder="Rua, Número, Bairro" required>
+                                <input id="campo_endereco" name="endereco" type="text" class="form-input" placeholder="Rua, Número, Bairro" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="campo_cidade">Cidade:</label>
-                                <input id="campo_cidade" type="text" class="form-input" placeholder="Sua Cidade" required>
+                                <input id="campo_cidade" name="cidade" type="text" class="form-input" placeholder="Sua Cidade" required>
                             </div>
 
                             <div class="form-group">
@@ -128,6 +128,6 @@
             <p>&copy; 2025 ONG Patas Amigas</p>
         </div>
     </footer>
-
+<script src="../JAVA/script.js"></script>
 </body>
 </html>
