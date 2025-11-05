@@ -9,6 +9,33 @@
 </head>
 <body class="container-grid">
     
+    <header>
+    <div class="wrapper nav-container">
+        <h1>ONG Patas Amigas</h1> 
+        <button class="hamburger-menu" id="hamburgerBtn" aria-label="Alternar Menu de Navegação" aria-expanded="false">
+    ☰
+</button>
+
+        <button onclick="toggleDarkMode()" aria-label="Alternar entre modo claro e escuro" class="theme-toggle-btn">
+            🌙
+        </button> 
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Apoie-Nos ▼</a>
+                    <div class="dropdown-content">
+                        <a href="cadastro.html">Voluntariado</a>
+                    </div> 
+                </li>
+                <li><a href="projeto.html" id="linkProjetoSPA" class="nav-spa">Projeto</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
     <main> 
         <div class="wrapper grid-row">
             <div class="col-12 form-cadastro-layout">
@@ -116,12 +143,7 @@
 
             </div>
         </div>  
-    </main> <script>
-    function toggleMenu() {
-        const nav = document.querySelector('nav');
-        nav.classList.toggle('open');
-    }
-    </script>
+    </main> 
 
     <footer>
         <div class="wrapper">

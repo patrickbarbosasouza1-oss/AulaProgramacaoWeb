@@ -9,24 +9,43 @@
 <body class="container-grid">
     
     <header>
-        <div class="wrapper nav-container"> 
-            <h1>ONG Patas Amigas</h1>
-            <p class="slogan">Amor, Resgate e Reabilitação Animal</p> 
-        </div>
-    </header>
+    <div class="wrapper nav-container">
+        <h1>ONG Patas Amigas</h1> 
+        <button class="hamburger-menu" id="hamburgerBtn" aria-label="Alternar Menu de Navegação" aria-expanded="false">
+    ☰
+</button>
+
+        <button onclick="toggleDarkMode()" aria-label="Alternar entre modo claro e escuro" class="theme-toggle-btn">
+            🌙
+        </button> 
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#">Apoie-Nos ▼</a>
+                    <div class="dropdown-content">
+                        <a href="cadastro.html">Voluntariado</a>
+                    </div> 
+                </li>
+                <li><a href="projeto.html" id="linkProjetoSPA" class="nav-spa">Projeto</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
     <main>  
         <div class="wrapper"> 
             
-            <section class="grid-row">
-                <div class="col-12">
-                    <h2>O Projeto Social Patas Amigas</h2>
-                    <p>A ONG Patas Amigas dedica-se incansavelmente a resgatar, reabilitar e encontrar lares amorosos e responsáveis para animais abandonados e em situação de risco. Nosso projeto social é movido pela paixão e pelo respeito à vida animal, visando transformar a realidade de cães e gatos em nossa comunidade e promover a conscientização sobre a guarda responsável.</p>
-                    <p>Desde a nossa fundação, centenas de vidas foram salvas e transformadas. Trabalhamos em parceria com veterinários, educadores e, principalmente, com o apoio de voluntários e doadores.</p>
-                </div>        
-            </section>
+            <section class="col-12 col-md-6 col-lg-4">
+        <h2>O Projeto Social Patas Amigas</h2>
+        <p>A ONG Patas Amigas dedica-se incessantemente a resgatar, reabilitar e encontrar lares amorosos...</p>
+        <p>Nosso projeto social é movido pela paixão e pelo respeito à vida animal...</p>
+        <p>Desde a nossa fundação, centenas de vidas foram salvas e transformadas...</p>
+    </section>
 
-            <section id="voluntariado" class="grid-row">
+            <section id="voluntariado" class="col-12 col-md-6 col-lg-4">
                 <div class="col-12 col-lg-8"> 
                     <h2>Seja um Voluntário e Transforme Vidas</h2>
                     <p>O voluntariado é o coração da Patas Amigas. Sua dedicação, tempo e amor são essenciais para manter nossas atividades e garantir o bem-estar dos animais sob nossos cuidados. Não importa sua habilidade ou disponibilidade, sua ajuda faz uma enorme diferença!</p>
@@ -42,9 +61,15 @@
 
                     <a href="cadastro.html" class="btn btn-primary" style="align-self: flex-start; margin-top: 10px;">Quero Ser Voluntário!</a>
                 </div> 
+
+                <br>
+
                 <div class="col-12 col-lg-4">
                     <img src="../Img/ft2.jpg" alt="Voluntários com animais resgatados" class="img-destaque-voluntario">
                 </div> 
+
+                <br>
+
             </section>
 
 
@@ -75,12 +100,6 @@
         </div>
     </footer>
 
-    <script>
-    function toggleMenu() {
-        const nav = document.querySelector('nav');
-        nav.classList.toggle('open');
-    }
-    </script>
 <script src="../JAVA/script.js"></script>
 </body>
 </html>

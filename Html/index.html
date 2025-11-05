@@ -10,7 +10,13 @@
     <header>
         <div class="wrapper nav-container">
             <h1>ONG Patas Amigas</h1> 
-            <span class="hamburger-menu" onclick="toggleMenu()">☰</span>
+            <button class="hamburger-menu" id="hamburgerBtn" aria-label="Alternar Menu de Navegação" aria-expanded="false">
+    ☰
+</button>
+
+            <button onclick="toggleDarkMode()" aria-label="Alternar entre modo claro e escuro" class="theme-toggle-btn">
+            🌙
+        </button>
 
             <nav>
                 <ul>
@@ -65,12 +71,6 @@
         </div>
     </footer>
 
-    <script>
-    function toggleMenu() {
-        const nav = document.querySelector('nav');
-        nav.classList.toggle('open');
-    }
-    </script>
 <script src="../JAVA/script.js"></script>
 </body>
 </html>

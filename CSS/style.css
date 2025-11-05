@@ -1,6 +1,6 @@
 /* =======================================
-   1. SISTEMA DE DESIGN (CSS Variables)
-   ======================================= */
+    1. SISTEMA DE DESIGN (CSS Variables)
+    ======================================= */
 :root {
     /* PALETA DE CORES (Mínimo de 8 cores) */
     --cor-primaria: #4CAF50;    /* Verde Esperança (Ações Principais) */
@@ -12,9 +12,9 @@
     --cor-neutra-escura: #333333; /* Texto principal */
     
     /* Feedback */
-    --cor-sucesso: #28a745;     /* Verde Claro */
-    --cor-erro: #dc3545;        /* Vermelho */
-    --cor-info: #17a2b8;        /* Azul Claro */
+    --cor-sucesso: #28a745;      /* Verde Claro */
+    --cor-erro: #dc3545;         /* Vermelho */
+    --cor-info: #17a2b8;         /* Azul Claro */
 
     /* TIPOGRAFIA HIERÁRQUICA (Mínimo de 5 tamanhos) */
     --fonte-principal: 'Roboto', sans-serif;
@@ -36,6 +36,9 @@
     
     /* Outros */
     --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    /* Variável auxiliar para o Dark Mode (Fundo de componentes) */
+    --fundo-componente: white; 
 }
 
 /* Base e Reset */
@@ -43,12 +46,19 @@
     box-sizing: border-box;
 }
 
+/* Foco de Acessibilidade (Geral) */
+*:focus {
+    outline: 3px solid #0056b3; /* Cor de alto contraste para acessibilidade */
+    outline-offset: 3px; 
+}
+
 body {
     font-family: var(--fonte-principal);
     font-size: var(--tamanho-fonte-base);
     line-height: 1.6;
+    /* Usa as variáveis que serão alteradas no dark mode */
     color: var(--cor-neutra-escura);
-    background-color: var(--cor-neutra-clara);
+    background-color: var(--cor-neutra-clara); 
     min-height: 100vh;
 }
 
@@ -75,20 +85,19 @@ a:hover {
 }
 
 /* =======================================
-   2. LEIAUTE RESPONSIVO GERAL (GRID)
-   ======================================= */
+    2. LEIAUTE RESPONSIVO GERAL (GRID)
+    ======================================= */
 
 /* Leiaute Principal com CSS Grid */
 .container-grid {
     display: grid;
-    /* Define as áreas principais: cabeçalho, conteúdo principal e rodapé */
     grid-template-areas:
         "header"
         "main"
         "footer";
-    grid-template-rows: auto 1fr auto; /* header e footer são automáticos, main pega o restante */
+    grid-template-rows: auto 1fr auto; 
     min-height: 100vh;
-    overflow-x: hidden; /* Previne scroll horizontal em mobile */
+    overflow-x: hidden; 
 }
 
 /* Wrapper para centralizar conteúdo */
@@ -98,7 +107,7 @@ a:hover {
     padding: 0 var(--espacamento-sm);
 }
 
-/* Sistema de Grid Customizado de 12 Colunas (Para conteúdo interno) */
+/* Sistema de Grid Customizado de 12 Colunas */
 .grid-row {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -106,15 +115,15 @@ a:hover {
     margin-bottom: var(--espacamento-lg);
 }
 
-/* Classes de Colunas (Mobile First: sempre 12 colunas) */
+/* Classes de Colunas (Mobile First) */
 .col-12 { grid-column: span 12; }
-.col-6 { grid-column: span 12; } /* Mobile */
-.col-4 { grid-column: span 12; } /* Mobile */
+.col-6 { grid-column: span 12; }
+.col-4 { grid-column: span 12; }
 
 
 /* =======================================
-   3. NAVEGAÇÃO SOFISTICADA E INTERATIVA
-   ======================================= */
+    3. NAVEGAÇÃO SOFISTICADA E INTERATIVA
+    ======================================= */
 header {
     grid-area: header;
     background-color: var(--cor-primaria);
@@ -128,6 +137,18 @@ header h1 {
     margin: 0;
 }
 
+header p { /* Estilo para o Slogan (Se houver) */
+    font-size: var(--tamanho-fonte-md, 1.5rem); 
+    font-style: italic; 
+    font-weight: 300; 
+    color: white; 
+    text-align: center; 
+    margin: var(--espacamento-xs, 8px) 0 0 0; 
+    padding-bottom: var(--espacamento-sm, 16px); 
+    opacity: 0.9;
+}
+
+
 /* Nav Desktop (Flexbox) */
 .nav-container {
     display: flex;
@@ -137,7 +158,7 @@ header h1 {
 
 nav ul {
     list-style: none;
-    display: flex; /* Flexbox para alinhar os links */
+    display: flex; 
     margin: 0;
     padding: 0;
 }
@@ -161,11 +182,11 @@ nav a:hover {
     text-decoration: none;
 }
 
-/* Dropdown (Exemplo) */
+/* Dropdown */
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: var(--fundo-componente);
     min-width: 160px;
     box-shadow: var(--sombra-card);
     z-index: 1;
@@ -188,15 +209,32 @@ nav a:hover {
 
 /* Menu Hamburguer e Mobile Nav */
 .hamburger-menu {
-    display: none; /* Esconde no desktop */
+    display: none; 
     font-size: var(--tamanho-fonte-lg);
     cursor: pointer;
     color: white;
 }
 
+/* Botão de Alternância de Tema */
+.theme-toggle-btn {
+    background: transparent;
+    border: none;
+    color: white; /* No modo claro/padrão, é branco no header verde */
+    font-size: var(--tamanho-fonte-lg);
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-left: var(--espacamento-md);
+    padding: 0;
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+
 /* --------------------------------------
-   4. COMPONENTES DE INTERFACE
-   -------------------------------------- */
+    4. COMPONENTES DE INTERFACE
+    -------------------------------------- */
 
 /* BOTÕES com Estados Visuais */
 .btn {
@@ -213,7 +251,7 @@ nav a:hover {
 
 /* Primário (ONG) */
 .btn-primary {
-    background-color: var(--cor-secundaria); /* Laranja Destaque */
+    background-color: var(--cor-secundaria); 
     color: white;
 }
 .btn-primary:hover, .btn-primary:focus {
@@ -235,7 +273,7 @@ nav a:hover {
 
 /* CARDS Responsivos (Para projeto.html) */
 .card {
-    background-color: white;
+    background-color: var(--fundo-componente);
     border-radius: 10px;
     box-shadow: var(--sombra-card);
     padding: var(--espacamento-md);
@@ -274,14 +312,14 @@ nav a:hover {
 
 /* FORMULÁRIOS Estilizados e Validação Visual (cadastro.html) */
 .form-container {
-    background-color: white;
+    background-color: var(--fundo-componente);
     padding: var(--espacamento-lg);
     border-radius: 10px;
     box-shadow: var(--sombra-card);
 }
 
 .form-group {
-    display: flex; /* Flexbox para estrutura interna */
+    display: flex; 
     flex-direction: column;
     margin-bottom: var(--espacamento-sm);
 }
@@ -302,641 +340,11 @@ nav a:hover {
 .form-input:focus, .form-select:focus {
     outline: none;
     border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); /* Sombra suave Verde */
-}
-
-/* Validação Visual (Erro) */
-div.form-group.error input.form-input, 
-div.form-group.error select.form-select {
-    border-color: var(--cor-erro);
-    /* Adicione um box-shadow de erro opcional para destaque */
-    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2); 
-}
-
-/* Componente de Feedback (Alerts) */
-.alert {
-    padding: var(--espacamento-sm);
-    margin-bottom: var(--espacamento-sm);
-    border-radius: 4px;
-    font-weight: bold;
-}
-.alert-error {
-    background-color: color-mix(in srgb, var(--cor-erro) 10%, white);
-    color: var(--cor-erro);
-    border: 1px solid var(--cor-erro);
-}
-
-/* --------------------------------------
-   5. RODAPÉ (Footer)
-   -------------------------------------- */
-footer {
-    grid-area: footer;
-    background-color: var(--cor-neutra-escura);
-    color: var(--cor-neutra-media);
-    text-align: center;
-    padding: var(--espacamento-sm) 0;
-    font-size: var(--tamanho-fonte-sm);
-}
-
-/* --------------------------------------
-   6. BREAKPOINTS RESPONSIVOS (MÍNIMO 5)
-   -------------------------------------- */
-
-/* Breakpoint 1: Mobile S (Padrão: 320px) - Estilos definidos acima */
-
-/* Breakpoint 2: Mobile M (>= 576px) */
-@media (min-width: 576px) {
-    .wrapper {
-        padding: 0 var(--espacamento-lg);
-    }
-}
-
-/* Breakpoint 3: Tablet (>= 768px) */
-@media (min-width: 768px) {
-    /* Layout: Ativa a navegação desktop e o Grid de 12 colunas */
-    
-    .hamburger-menu {
-        display: none; 
-    }
-    
-    /* Colunas: 6/12 no tablet */
-    .col-md-6 { grid-column: span 6; }
-    .col-md-4 { grid-column: span 4; }
-    .col-md-8 { grid-column: span 8; } 
-    
-    /* Configurações específicas para o cadastro */
-    .form-cadastro-layout {
-        grid-column: 3 / span 8; /* Centraliza o formulário */
-    }
-}
-
-/* Breakpoint 4: Desktop S (>= 992px) */
-@media (min-width: 992px) {
-    header h1 {
-        font-size: var(--tamanho-fonte-xl);
-    }
-    
-    /* Colunas: 4/12 no desktop */
-    .col-lg-4 { grid-column: span 4; }
-    .col-lg-3 { grid-column: span 3; }
-    
-    .form-cadastro-layout {
-        grid-column: 4 / span 6; /* Mais estreito no centro */
-    }
-}
-
-/* Breakpoint 5: Desktop L (>= 1200px) */
-@media (min-width: 1200px) {
-    .col-xl-3 { grid-column: span 3; }
-}
-
-/* Estilos Mobile (Ativados quando a largura é menor que 768px) */
-@media (max-width: 767px) {
-    .hamburger-menu {
-        display: block; /* Mostra o ícone */
-    }
-    nav ul {
-        display: none; /* Esconde o menu desktop */
-        flex-direction: column;
-        width: 100%;
-        background-color: color-mix(in srgb, var(--cor-primaria) 90%, black);
-        position: absolute;
-        top: 100%;
-        left: 0;
-        text-align: center;
-    }
-    /* Classe adicionada por JS para mostrar o menu */
-    nav.open ul {
-        display: flex; 
-    }
-    nav li {
-        margin: 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-}
-/* =======================================
-   1. SISTEMA DE DESIGN (CSS Variables)
-   ======================================= */
-:root {
-    /* PALETA DE CORES (Mínimo de 8 cores) */
-    --cor-primaria: #4CAF50;    /* Verde Esperança (Ações Principais) */
-    --cor-secundaria: #FF9800;  /* Laranja Acolhedor (Destaques/Adote) */
-    
-    /* Neutras */
-    --cor-neutra-clara: #F8F8F8; /* Fundo principal */
-    --cor-neutra-media: #CCCCCC; /* Bordas e divisores */
-    --cor-neutra-escura: #333333; /* Texto principal */
-    
-    /* Feedback */
-    --cor-sucesso: #28a745;     /* Verde Claro */
-    --cor-erro: #dc3545;        /* Vermelho */
-    --cor-info: #17a2b8;        /* Azul Claro */
-
-    /* TIPOGRAFIA HIERÁRQUICA (Mínimo de 5 tamanhos) */
-    --fonte-principal: 'Roboto', sans-serif;
-    --fonte-titulos: 'Montserrat', sans-serif;
-    
-    --tamanho-fonte-xl: 3.0rem; /* H1 */
-    --tamanho-fonte-lg: 2.0rem; /* H2 */
-    --tamanho-fonte-md: 1.5rem; /* H3 */
-    --tamanho-fonte-base: 1.0rem; /* Padrão (P, Input) */
-    --tamanho-fonte-sm: 0.875rem; /* Small (Badges, Rodapé) */
-
-    /* SISTEMA DE ESPAÇAMENTO MODULAR (Múltiplos de 8px) */
-    --espacamento-xs: 8px;
-    --espacamento-sm: 16px;
-    --espacamento-md: 24px;
-    --espacamento-lg: 32px;
-    --espacamento-xl: 48px;
-    --espacamento-xxl: 64px;
-    
-    /* Outros */
-    --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* Base e Reset */
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: var(--fonte-principal);
-    font-size: var(--tamanho-fonte-base);
-    line-height: 1.6;
-    color: var(--cor-neutra-escura);
-    background-color: var(--cor-neutra-clara);
-    min-height: 100vh;
-}
-
-h1, h2, h3 {
-    font-family: var(--fonte-titulos);
-    color: var(--cor-primaria);
-    margin-bottom: var(--espacamento-sm);
-}
-
-h1 { font-size: var(--tamanho-fonte-xl); }
-h2 { font-size: var(--tamanho-fonte-lg); }
-h3 { font-size: var(--tamanho-fonte-md); }
-
-p {
-    margin-bottom: var(--espacamento-sm);
-}
-
-a {
-    color: var(--cor-primaria);
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-
-/* =======================================
-   2. LEIAUTE RESPONSIVO GERAL (GRID)
-   ======================================= */
-
-/* Leiaute Principal com CSS Grid */
-.container-grid {
-    display: grid;
-    /* Define as áreas principais: cabeçalho, conteúdo principal e rodapé */
-    grid-template-areas:
-        "header"
-        "main"
-        "footer";
-    grid-template-rows: auto 1fr auto; /* header e footer são automáticos, main pega o restante */
-    min-height: 100vh;
-    overflow-x: hidden; /* Previne scroll horizontal em mobile */
-}
-
-/* Wrapper para centralizar conteúdo */
-.wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--espacamento-sm);
-}
-
-/* Sistema de Grid Customizado de 12 Colunas (Para conteúdo interno) */
-.grid-row {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: var(--espacamento-md);
-    margin-bottom: var(--espacamento-lg);
-}
-
-/* Classes de Colunas (Mobile First: sempre 12 colunas) */
-.col-12 { grid-column: span 12; }
-.col-6 { grid-column: span 12; } /* Mobile */
-.col-4 { grid-column: span 12; } /* Mobile */
-
-
-/* =======================================
-   3. NAVEGAÇÃO SOFISTICADA E INTERATIVA
-   ======================================= */
-header {
-    grid-area: header;
-    background-color: var(--cor-primaria);
-    padding: var(--espacamento-sm) 0;
-    box-shadow: var(--sombra-card);
-}
-
-header h1 {
-    color: white;
-    font-size: var(--tamanho-fonte-lg);
-    margin: 0;
-}
-
-/* Nav Desktop (Flexbox) */
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav ul {
-    list-style: none;
-    display: flex; /* Flexbox para alinhar os links */
-    margin: 0;
-    padding: 0;
-}
-
-nav li {
-    position: relative;
-    margin-left: var(--espacamento-md);
-}
-
-nav a {
-    color: white;
-    font-weight: bold;
-    padding: var(--espacamento-xs) var(--espacamento-sm);
-    display: block;
-    transition: background-color 0.3s;
-    border-radius: 4px;
-}
-
-nav a:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    text-decoration: none;
-}
-
-/* Dropdown (Exemplo) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 160px;
-    box-shadow: var(--sombra-card);
-    z-index: 1;
-    top: 100%;
-    left: 0;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    color: var(--cor-neutra-escura);
-    padding: var(--espacamento-xs);
-}
-
-.dropdown-content a:hover {
-    background-color: var(--cor-neutra-clara);
-}
-
-/* Menu Hamburguer e Mobile Nav */
-.hamburger-menu {
-    display: none; /* Esconde no desktop */
-    font-size: var(--tamanho-fonte-lg);
-    cursor: pointer;
-    color: white;
-}
-
-/* --------------------------------------
-   4. COMPONENTES DE INTERFACE
-   -------------------------------------- */
-
-/* BOTÕES com Estados Visuais */
-.btn {
-    padding: var(--espacamento-sm) var(--espacamento-md);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: var(--tamanho-fonte-base);
-    font-weight: bold;
-    text-align: center;
-    transition: background-color 0.3s, transform 0.1s, opacity 0.3s;
-    display: inline-block;
-}
-
-/* Primário (ONG) */
-.btn-primary {
-    background-color: var(--cor-secundaria); /* Laranja Destaque */
-    color: white;
-}
-.btn-primary:hover, .btn-primary:focus {
-    background-color: color-mix(in srgb, var(--cor-secundaria) 90%, black);
-}
-.btn-primary:active {
-    transform: scale(0.98);
-}
-.btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-/* Secundário (Ex: Voltar) */
-.btn-secondary {
-    background-color: var(--cor-neutra-media);
-    color: var(--cor-neutra-escura);
-}
-
-/* CARDS Responsivos (Para projeto.html) */
-.card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: var(--sombra-card);
-    padding: var(--espacamento-md);
-    display: flex;
-    flex-direction: column;
-}
-.card h3 {
-    color: var(--cor-secundaria);
-}
-.card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: var(--espacamento-sm);
-}
-
-/* BADGES e TAGS */
-.badge {
-    display: inline-block;
-    padding: 4px var(--espacamento-xs);
-    border-radius: var(--espacamento-xs);
-    font-size: var(--tamanho-fonte-sm);
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-right: 5px;
-}
-
-.badge-info {
-    background-color: var(--cor-info);
-    color: white;
-}
-.badge-success {
-    background-color: var(--cor-sucesso);
-    color: white;
-}
-
-/* FORMULÁRIOS Estilizados e Validação Visual (cadastro.html) */
-.form-container {
-    background-color: white;
-    padding: var(--espacamento-lg);
-    border-radius: 10px;
-    box-shadow: var(--sombra-card);
-}
-
-.form-group {
-    display: flex; /* Flexbox para estrutura interna */
-    flex-direction: column;
-    margin-bottom: var(--espacamento-sm);
-}
-
-.form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.form-input, .form-select {
-    padding: var(--espacamento-xs);
-    border: 1px solid var(--cor-neutra-media);
-    border-radius: 4px;
-    font-size: var(--tamanho-fonte-base);
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.form-input:focus, .form-select:focus {
-    outline: none;
-    border-color: var(--cor-primaria);
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); /* Sombra suave Verde */
-}
-
-/* Validação Visual (Erro) - CORREÇÃO DE ESPECIFICIDADE */
-.form-group.error .form-input, 
-.form-group.error .form-select {
-    
-    /* CRUCIAL: Usa !important para garantir que a borda de erro sobreponha qualquer outra regra (como :focus) */
-    border: 2px solid var(--cor-erro) !important; 
-    
-    /* Garante que o box-shadow de erro também seja aplicado com prioridade */
-    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5) !important; /* Usei o rgba equivalente de var(--cor-erro) para melhor compatibilidade */
-}
-
-
-/* Componente de Feedback (Alerts) */
-.alert {
-    padding: var(--espacamento-sm);
-    margin-bottom: var(--espacamento-sm);
-    border-radius: 4px;
-    font-weight: bold;
-}
-.alert-error {
-    background-color: color-mix(in srgb, var(--cor-erro) 10%, white);
-    color: var(--cor-erro);
-    border: 1px solid var(--cor-erro);
-}
-
-/* --------------------------------------
-   5. RODAPÉ (Footer)
-   -------------------------------------- */
-footer {
-    grid-area: footer;
-    background-color: var(--cor-neutra-escura);
-    color: var(--cor-neutra-media);
-    text-align: center;
-    padding: var(--espacamento-sm) 0;
-    font-size: var(--tamanho-fonte-sm);
-}
-
-/* --------------------------------------
-   6. BREAKPOINTS RESPONSIVOS (MÍNIMO 5)
-   -------------------------------------- */
-
-/* Breakpoint 1: Mobile S (Padrão: 320px) - Estilos definidos acima */
-
-/* Breakpoint 2: Mobile M (>= 576px) */
-@media (min-width: 576px) {
-    .wrapper {
-        padding: 0 var(--espacamento-lg);
-    }
-}
-
-/* Breakpoint 3: Tablet (>= 768px) */
-@media (min-width: 768px) {
-    /* Layout: Ativa a navegação desktop e o Grid de 12 colunas */
-    
-    .hamburger-menu {
-        display: none; 
-    }
-    
-    /* Colunas: 6/12 no tablet */
-    .col-md-6 { grid-column: span 6; }
-    .col-md-4 { grid-column: span 4; }
-    .col-md-8 { grid-column: span 8; } 
-    
-    /* Configurações específicas para o cadastro */
-    .form-cadastro-layout {
-        grid-column: 3 / span 8; /* Centraliza o formulário */
-    }
-}
-
-/* Breakpoint 4: Desktop S (>= 992px) */
-@media (min-width: 992px) {
-    header h1 {
-        font-size: var(--tamanho-fonte-xl);
-    }
-    
-    /* Colunas: 4/12 no desktop */
-    .col-lg-4 { grid-column: span 4; }
-    .col-lg-3 { grid-column: span 3; }
-    
-    .form-cadastro-layout {
-        grid-column: 4 / span 6; /* Mais estreito no centro */
-    }
-}
-
-/* Breakpoint 5: Desktop L (>= 1200px) */
-@media (min-width: 1200px) {
-    .col-xl-3 { grid-column: span 3; }
-}
-
-/* Estilos Mobile (Ativados quando a largura é menor que 768px) */
-@media (max-width: 767px) {
-    .hamburger-menu {
-        display: block; /* Mostra o ícone */
-    }
-    nav ul {
-        display: none; /* Esconde o menu desktop */
-        flex-direction: column;
-        width: 100%;
-        background-color: color-mix(in srgb, var(--cor-primaria) 90%, black);
-        position: absolute;
-        top: 100%;
-        left: 0;
-        text-align: center;
-    }
-    /* Classe adicionada por JS para mostrar o menu */
-    nav.open ul {
-        display: flex; 
-    }
-    nav li {
-        margin: 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-}
-/* Estilo específico para o slogan dentro do header */
-header p {
-    /* 1. Tipografia e Tamanho */
-    font-size: var(--tamanho-fonte-md, 1.5rem); /* Tamanho maior para destaque */
-    font-style: italic; /* Adiciona um estilo elegante de slogan */
-    font-weight: 300; /* Deixa a fonte mais fina, se a fonte suportar */
-    
-    /* 2. Cores e Alinhamento */
-    color: white; /* Cor branca para contraste com o fundo do header */
-    text-align: center; /* Centraliza o slogan */
-    
-    /* 3. Espaçamento */
-    margin: var(--espacamento-xs, 8px) 0 0 0; /* Pequena margem superior (8px) para separar do H1 */
-    padding-bottom: var(--espacamento-sm, 16px); /* Adiciona um padding na parte inferior do header (se o p for o último elemento) */
-    opacity: 0.9; /* Deixa o slogan ligeiramente mais suave que o h1 */
-}
-/* =======================================
-   Ajustes para Imagem Desproporcional e Posicionamento
-   ======================================= */
-
-/* 1. Estilização da Imagem de Destaque */
-.img-destaque-voluntario {
-    width: 100%; /* Garante que a imagem preencha a largura da sua coluna */
-    max-width: 100%;
-    
-    /* Configuração de altura para manter a proporção visualmente (pode ser ajustada) */
-    height: 300px; /* Altura fixa ou semi-fixa para dar uniformidade */
-    
-    display: block;
-    border-radius: 8px; 
-    box-shadow: var(--sombra-card, 0 4px 12px rgba(0, 0, 0, 0.08)); 
-    
-    /* CRUCIAL: Garante que a imagem cubra a área de 300px sem esticar ou achatar */
-    object-fit: cover; 
-    
-    /* CRUCIAL: Se a imagem estiver flutuando, anule margens extras */
-    margin: 0; 
-}
-
-/* 2. Ajuste de Posicionamento Vertical da Imagem (usando a coluna) */
-
-/* Aplica Flexbox à coluna que contém a imagem para alinhamento vertical */
-.grid-row .col-lg-4 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centraliza verticalmente o conteúdo (a imagem) */
-    align-items: center; /* Centraliza horizontalmente o conteúdo (a imagem) */
-}
-
-/* 3. Ajuste para o Card (Texto) se for necessário alinhar o texto com a imagem */
-/* Aplicamos Flexbox também na coluna do texto (col-lg-8) para que ela se estique
-   e alinhe seu conteúdo com o centro da imagem, se o texto for curto. */
-.grid-row .col-lg-8 {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; /* Descomente se quiser centralizar o texto verticalmente */
-}
-
-/* 4. Garantir visualização em telas menores */
-@media (max-width: 991px) {
-    .img-destaque-voluntario {
-        height: auto; /* Remove a altura fixa em mobile para a imagem se ajustar naturalmente */
-        margin-top: var(--espacamento-md, 24px); 
-    }
-    .grid-row .col-lg-4 {
-        display: block; /* Volta ao comportamento padrão de bloco em mobile */
-    }
-}
-
-/* =======================================
-   ESTILIZAÇÃO DA IMAGEM DE CADASTRO (.img-cadastro)
-   ======================================= */
-
-.img-cadastro {
-    /* 1. Responsividade e Tamanho */
-    width: 100%;             /* A imagem ocupa toda a largura disponível no container */
-    max-width: 300px;        /* Limita a largura máxima da imagem (pode ser ajustado) */
-    height: auto;            /* A altura se ajusta automaticamente para manter a proporção */
-    display: block;          /* Garante que a imagem se comporte como bloco para margens */
-
-    /* 2. Visual Moderno */
-    border-radius: 12px;     /* Borda arredondada suave */
-    
-    /* 3. Efeito de Destaque */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); /* Sombra mais destacada */
-    
-    /* 4. Espaçamento */
-    margin: var(--espacamento-md) auto; /* Centraliza horizontalmente (auto) e adiciona margem superior/inferior */
-
-    /* 5. Ajuste de Preenchimento (Importante para evitar distorção) */
-    /* Se você quiser forçar uma altura e cortar a imagem para preenchê-la: */
-    /* height: 200px; 
-    object-fit: cover; */
-    
-    /* Se preferir que ela se ajuste naturalmente: */
-    object-fit: contain; /* Ajusta a imagem inteira dentro do espaço sem cortar */
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); 
 }
 
 /* Estilo específico para Agrupamento Lógico (fieldset e legend) */
-
 fieldset {
-    /* Retira a borda padrão para dar um visual mais moderno,
-       mas você pode mantê-la ou estilizá-la de forma sutil. */
     border: 1px solid var(--cor-neutra-media); 
     border-radius: 8px;
     padding: var(--espacamento-md);
@@ -944,11 +352,360 @@ fieldset {
 }
 
 legend {
-    /* Estiliza o título do agrupamento */
-    font-size: var(--tamanho-fonte-md); /* Tamanho H3 */
+    font-size: var(--tamanho-fonte-md); 
     font-weight: bold;
-    color: var(--cor-secundaria); /* Usa a cor de destaque (Laranja) */
+    color: var(--cor-secundaria); 
     padding: 0 var(--espacamento-xs);
-    /* Desloca a legenda ligeiramente para fora da fieldset */
     margin-left: -8px; 
 }
+
+/* Validação Visual (Erro) */
+.form-group.error .form-input, 
+.form-group.error .form-select {
+    border: 2px solid var(--cor-erro) !important; 
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5) !important; 
+}
+
+/* Componente de Feedback (Alerts) */
+.alert {
+    padding: var(--espacamento-sm);
+    margin-bottom: var(--espacamento-sm);
+    border-radius: 4px;
+    font-weight: bold;
+}
+.alert-error {
+    background-color: color-mix(in srgb, var(--cor-erro) 10%, white);
+    color: var(--cor-erro);
+    border: 1px solid var(--cor-erro);
+}
+
+/* Imagens */
+.img-destaque-voluntario {
+    width: 100%; 
+    max-width: 100%;
+    height: 300px; 
+    display: block;
+    border-radius: 8px; 
+    box-shadow: var(--sombra-card); 
+    object-fit: cover; 
+    margin: 0; 
+}
+
+.img-cadastro {
+    width: 100%; 
+    max-width: 300px; 
+    height: auto; 
+    display: block; 
+    border-radius: 12px; 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); 
+    margin: var(--espacamento-md) auto; 
+    object-fit: contain; 
+}
+
+
+/* --------------------------------------
+    5. RODAPÉ (Footer)
+    -------------------------------------- */
+footer {
+    grid-area: footer;
+    background-color: var(--cor-neutra-escura);
+    color: var(--cor-neutra-media);
+    text-align: center;
+    padding: var(--espacamento-sm) 0;
+    font-size: var(--tamanho-fonte-sm);
+}
+
+/* =======================================
+    6. BREAKPOINTS RESPONSIVOS (MÍNIMO 5)
+    ======================================= */
+
+/* Breakpoint 2: Mobile M (>= 576px) */
+@media (min-width: 576px) {
+    .wrapper {
+        padding: 0 var(--espacamento-lg);
+    }
+}
+
+/* Breakpoint 3: Tablet (>= 768px) */
+@media (min-width: 768px) {
+    
+    .hamburger-menu {
+        display: none; 
+    }
+    
+    /* Colunas: 6/12 no tablet */
+    .col-md-6 { grid-column: span 6; }
+    .col-md-4 { grid-column: span 4; }
+    .col-md-8 { grid-column: span 8; } 
+    
+    /* Configurações específicas para o cadastro */
+    .form-cadastro-layout {
+        grid-column: 3 / span 8; 
+    }
+    
+    /* Alinhamento da imagem de destaque */
+    .grid-row .col-lg-4 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center; 
+    }
+    .grid-row .col-lg-8 {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Breakpoint 4: Desktop S (>= 992px) */
+@media (min-width: 992px) {
+    header h1 {
+        font-size: var(--tamanho-fonte-xl);
+    }
+    
+    /* Colunas: 4/12 no desktop */
+    .col-lg-4 { grid-column: span 4; }
+    .col-lg-3 { grid-column: span 3; }
+    
+    .form-cadastro-layout {
+        grid-column: 4 / span 6; 
+    }
+}
+
+/* Breakpoint 5: Desktop L (>= 1200px) */
+@media (min-width: 1200px) {
+    .col-xl-3 { grid-column: span 3; }
+}
+
+/* Estilos Mobile */
+@media (max-width: 767px) {
+    .hamburger-menu {
+        display: block; 
+    }
+    .nav-container nav { /* Estende a navegação para o mobile */
+        width: 100%;
+        position: absolute;
+        top: 100%; 
+        left: 0;
+    }
+    nav ul {
+        display: none; 
+        flex-direction: column;
+        width: 100%;
+        background-color: color-mix(in srgb, var(--cor-primaria) 90%, black);
+        text-align: center;
+        box-shadow: var(--sombra-card);
+    }
+    /* Classe adicionada por JS para mostrar o menu */
+    nav.open ul {
+        display: flex; 
+    }
+    nav li {
+        margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .img-destaque-voluntario {
+        height: auto; 
+        margin-top: var(--espacamento-md); 
+    }
+    .grid-row .col-lg-4 {
+        display: block; 
+    }
+}
+
+/* =======================================
+    7. ACESSIBILIDADE E MODOS DE TEMA (.dark-mode)
+    ======================================= */
+
+/* --------------------------------------
+    7.1. REDEFINIÇÃO DE VARIÁVEIS NO MODO ESCURO
+    -------------------------------------- */
+.dark-mode {
+    /* Neutras Invertidas */
+    --cor-neutra-clara: #121212; 
+    --cor-neutra-media: #444444; 
+    --cor-neutra-escura: #E0E0E0; 
+    
+    /* Fundo dos Componentes */
+    --fundo-componente: #1E1E1E; 
+    
+    /* Cores de Destaque */
+    --cor-primaria: #66BB6A; 
+    --cor-secundaria: #FFB74D; 
+    
+    /* Feedback */
+    --cor-sucesso: #4CAF50; 
+    --cor-erro: #EF5350; 
+    --cor-info: #4FC3F7; 
+    
+    /* Sombras Adaptadas */
+    --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.4); 
+}
+
+/* --------------------------------------
+    7.2. APLICAÇÃO GERAL NO MODO ESCURO
+    -------------------------------------- */
+
+/* Corpo e Base (Aplicado ao <body> pela herança das variáveis) */
+/* REMOVI O BLOCO .dark-mode body {} - É redundante pois as tags já herdam as variáveis */
+
+/* Header (Cabeçalho) */
+.dark-mode header {
+    background-color: #282828; 
+    box-shadow: var(--sombra-card);
+}
+.dark-mode header h1, 
+.dark-mode header p, 
+.dark-mode .hamburger-menu { /* Garante que o menu mobile fique claro também */
+    color: var(--cor-neutra-escura); 
+}
+.dark-mode nav a { /* Links da nav ficam com cor clara do tema */
+    color: var(--cor-neutra-escura); 
+}
+
+/* Rodapé (Footer) */
+.dark-mode footer {
+    background-color: #0d0d0d;
+    color: var(--cor-neutra-media);
+}
+
+/* Títulos e Links */
+.dark-mode h1, .dark-mode h2, .dark-mode h3 {
+    color: var(--cor-primaria); 
+}
+.dark-mode a {
+    color: var(--cor-secundaria); 
+}
+.dark-mode a:hover {
+    color: var(--cor-secundaria); /* Mantém a cor no hover */
+}
+
+
+/* Cards e Contêineres */
+.dark-mode .card,
+.dark-mode .form-container,
+.dark-mode .dropdown-content {
+    background-color: var(--fundo-componente); 
+    box-shadow: var(--sombra-card);
+}
+
+/* Formulários (Inputs e Selects) */
+.dark-mode .form-input, 
+.dark-mode .form-select {
+    color: var(--cor-neutra-escura); 
+    background-color: #383838; /* Cinza um pouco mais escuro para inputs */
+    border-color: #555555;
+}
+
+/* Foco e Erro no Modo Escuro */
+.dark-mode .form-input:focus, 
+.dark-mode .form-select:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.5); 
+}
+
+.dark-mode .form-group.error .form-input, 
+.dark-mode .form-group.error .form-select {
+    border: 2px solid var(--cor-erro) !important; 
+    box-shadow: 0 0 0 3px rgba(239, 83, 80, 0.5) !important; 
+}
+
+/* Garante um indicador de foco claro e consistente */
+:focus {
+    outline: 3px solid var(--cor-foco, #4CAF50); /* Cor verde ou de destaque */
+    outline-offset: 2px; /* Espaço entre a borda e o elemento */
+    border-radius: 4px;
+}
+
+/* Garante que o usuário do mouse não veja sempre o foco irritante */
+/* (Mas mantenha o :focus acima como fallback) */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+//* --------------------------------------
+    7.3. MODO DE ALTO CONTRASTE (WCAG AA) - CORRIGIDO PARA MÁXIMO IMPACTO VISUAL
+    -------------------------------------- */
+.high-contrast-mode {
+    /* VARIÁVEIS FORÇADAS PARA ALTO CONTRASTE */
+    --cor-neutra-clara: #000000 !important; /* Fundo principal: PRETO */
+    --cor-neutra-escura: #FFFF00 !important; /* Texto principal: AMARELO FLUORESCENTE */
+    
+    --fundo-componente: #000000 !important; /* Fundo de Cards/Formulários */
+    
+    --cor-primaria: #FFFFFF !important; /* Cor de Destaque 1 (Títulos/Header) */
+    --cor-secundaria: #00FFFF !important; /* Cor de Destaque 2 (Links/Botões) */
+    --cor-neutra-media: #FFFFFF !important; /* Bordas e Linhas */
+    
+    --cor-foco: #FFFF00 !important; /* Foco em amarelo forte */
+    
+    /* APLICAÇÃO GERAL NO CORPO */
+    color: var(--cor-neutra-escura) !important; 
+    background-color: var(--cor-neutra-clara) !important;
+    
+    /* Remove decorações visuais que atrapalham */
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+/* TÍTULOS E TEXTOS */
+.high-contrast-mode h1,
+.high-contrast-mode h2,
+.high-contrast-mode h3 {
+    color: var(--cor-primaria) !important; /* Branco para títulos */
+}
+
+/* LINKS E BOTÕES DE DESTAQUE */
+.high-contrast-mode a {
+    color: var(--cor-secundaria) !important; /* Ciano/Aqua */
+    text-decoration: underline !important; /* Links sempre sublinhados */
+}
+
+/* HEADER E FOOTER (Que usam fundo primário/escuro) */
+.high-contrast-mode header,
+.high-contrast-mode footer {
+    background-color: #000000 !important; 
+    border-bottom: 2px solid var(--cor-neutra-media) !important;
+}
+.high-contrast-mode header h1, 
+.high-contrast-mode header p, 
+.high-contrast-mode .hamburger-menu,
+.high-contrast-mode nav a {
+    color: var(--cor-primaria) !important; /* Texto do Header em Branco */
+}
+
+/* BOTÕES */
+.high-contrast-mode .btn {
+    background-color: #FFFFFF !important; /* Fundo branco */
+    color: #000000 !important; /* Texto preto */
+    border: 2px solid var(--cor-secundaria) !important; /* Borda ciano */
+    border-radius: 0 !important;
+}
+
+/* FORMULÁRIOS e CARDS */
+.high-contrast-mode .card,
+.high-contrast-mode .form-container,
+.high-contrast-mode fieldset,
+.high-contrast-mode .dropdown-content {
+    background-color: var(--fundo-componente) !important;
+    border: 1px solid var(--cor-neutra-media) !important; /* Borda branca */
+    box-shadow: none !important;
+}
+
+/* INPUTS (Campos) */
+.high-contrast-mode .form-input, 
+.high-contrast-mode .form-select {
+    color: var(--cor-neutra-escura) !important; /* Texto Amarelo */
+    background-color: #000000 !important;
+    border: 2px solid var(--cor-neutra-media) !important; /* Borda Branca */
+}
+
+/* Foco de Acessibilidade */
+.high-contrast-mode *:focus {
+    outline: 4px solid var(--cor-foco) !important; /* Foco Grosso Amarelo */
+    outline-offset: 3px !important; 
+}
+
+
+

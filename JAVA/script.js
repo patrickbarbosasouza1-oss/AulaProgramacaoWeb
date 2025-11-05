@@ -2,13 +2,14 @@
 // 1. Variáveis Globais e Estrutura de Rotas (SPA Básico)
 // =======================================================
 
-// AGORA APONTA APENAS PARA O NOME DO ARQUIVO (JÁ QUE A URL ATUAL JÁ ESTÁ NA PASTA HTML)
 const routes = {
-    '': 'index.html', // Chave vazia para rota raiz (/)
+    // Chave vazia para rota raiz (/) - Usado ao carregar a página inicialmente
+    '': 'index.html', 
     'index.html': 'index.html',
     'projeto.html': 'projeto.html',
     'cadastro.html': 'cadastro.html',
 };
+
 // =======================================================
 // 2. Templates JavaScript (Simples para Exemplo)
 // =======================================================
@@ -43,7 +44,8 @@ function maskCPF(value) {
 function maskTelefone(value) {
     value = value.replace(/\D/g, ""); // Remove tudo que não for dígito
     value = value.replace(/^(\d{2})(\d)/g, "($1) $2");
-    value = value.replace(/(\d)(\d{4})$/, "$1-$2");
+    // Verifica se é 9 ou 8 dígitos após o prefixo (para celular ou fixo)
+    value = value.replace(/(\d{5})(\d{4})$/, "$1-$2"); 
     return value;
 }
 
@@ -61,7 +63,8 @@ function maskCEP(value) {
  */
 function validateCPF(cpf) {
     // Verifica se tem 14 caracteres (formato com pontos e hífen)
-    return cpf.length === 14;
+    // Uma validação mais robusta seria necessária para produção
+    return cpf.length === 14; 
 }
 
 // =======================================================
@@ -73,56 +76,54 @@ function validateCPF(cpf) {
  * @param {Event} event - O evento de submissão do formulário.
  */
 function handleFormSubmission(event) {
-    event.preventDefault(); // Impede a submissão padrão do formulário (que recarregaria a página)
+    event.preventDefault(); 
 
     const form = event.target;
-    const formGroups = form.querySelectorAll('.form-group');
+    const formContainer = document.querySelector('.form-cadastro-layout');
     let isValid = true;
-    let nomeCompleto = ''; // Variável para o template
+    let nomeCompleto = ''; 
 
     // Limpa estados de erro anteriores
-    formGroups.forEach(group => {
+    form.querySelectorAll('.form-group').forEach(group => {
         group.classList.remove('error');
     });
 
     // 1. Itera sobre os campos obrigatórios
-    formGroups.forEach(group => {
+    form.querySelectorAll('.form-group').forEach(group => {
         const input = group.querySelector('.form-input, .form-select');
 
-        if (input && input.required && !input.value.trim()) {
-            // Campo vazio
-            group.classList.add('error');
-            isValid = false;
-        }
+        if (input) {
+             // 1. Validação de Campo Vazio
+            if (input.required && !input.value.trim()) {
+                group.classList.add('error');
+                isValid = false;
+            }
+            
+            // 2. Coleta o nome para o template
+            if (input.id === 'campo_nome') {
+                nomeCompleto = input.value.trim();
+            }
 
-        if (input && input.id === 'campo_nome') {
-            nomeCompleto = input.value.trim();
-        }
-
-        // Validação específica do CPF
-        if (input && input.id === 'campo_cpf' && !validateCPF(input.value)) {
-            group.classList.add('error');
-            isValid = false;
+            // 3. Validação específica do CPF (se o campo for relevante)
+            if (input.id === 'campo_cpf' && input.value.trim() && !validateCPF(input.value)) {
+                group.classList.add('error');
+                isValid = false;
+            }
         }
     });
 
-    // 2. Se for válido, simula o envio e usa o sistema de template
+    // 2. Se for válido, simula o envio
     if (isValid) {
-        // Simulação de envio para o servidor
-        console.log('Formulário enviado com sucesso!', new FormData(form));
+        console.log('Formulário enviado com sucesso!');
 
-        // Encontra o container do formulário para exibir o feedback
-        const formContainer = document.querySelector('.form-cadastro-layout');
+        // Salva e exibe o feedback
+        saveRegistrationToLocalStorage(new FormData(form));
         if (formContainer) {
-            // Usa o template JavaScript para exibir a mensagem de sucesso
             formContainer.innerHTML = templateFeedbackSucesso(nomeCompleto);
         }
 
-       
-        saveRegistrationToLocalStorage(new FormData(form));
     } else {
         alert('Por favor, preencha todos os campos obrigatórios e corrija os erros de formato.');
-        
     }
 }
 
@@ -138,11 +139,7 @@ function saveRegistrationToLocalStorage(formData) {
     const data = Object.fromEntries(formData.entries());
     let registrations = localStorage.getItem('patasAmigasRegistrations');
 
-    if (registrations) {
-        registrations = JSON.parse(registrations);
-    } else {
-        registrations = [];
-    }
+    registrations = registrations ? JSON.parse(registrations) : [];
 
     registrations.push(data);
     localStorage.setItem('patasAmigasRegistrations', JSON.stringify(registrations));
@@ -150,30 +147,98 @@ function saveRegistrationToLocalStorage(formData) {
 }
 
 // =======================================================
-// 6. Manipulação do DOM e Lógica de SPA
+// 6. Lógica de Acessibilidade: Modo Escuro e Menu Hamburguer
+// =======================================================
+
+// NOVO: Acessibilidade de 3 estados
+const THEMES = ['light', 'dark-mode', 'high-contrast-mode'];
+
+/**
+ * 🌙 Alterna entre modo claro, escuro e alto contraste.
+ */
+function toggleDarkMode() {
+    const body = document.body;
+    let currentTheme = 'light';
+
+    // 1. Determina o tema atual
+    if (body.classList.contains('dark-mode')) {
+        currentTheme = 'dark-mode';
+    } else if (body.classList.contains('high-contrast-mode')) {
+        currentTheme = 'high-contrast-mode';
+    }
+
+    // 2. Determina o próximo tema na sequência: light -> dark-mode -> high-contrast-mode -> light
+    const currentIndex = THEMES.indexOf(currentTheme);
+    const nextIndex = (currentIndex + 1) % THEMES.length;
+    const nextTheme = THEMES[nextIndex];
+
+    // 3. Aplica o novo tema
+    body.classList.remove(...THEMES.filter(t => t !== 'light')); 
+
+    if (nextTheme !== 'light') {
+        body.classList.add(nextTheme);
+    }
+
+    // 4. Salva e atualiza o ícone
+    localStorage.setItem('themePreference', nextTheme);
+    updateThemeToggleIcon(nextTheme);
+}
+
+/**
+ * ☀️ Carrega a preferência de tema do usuário ao iniciar a página.
+ */
+function loadThemePreference() {
+    const preference = localStorage.getItem('themePreference') || 'light';
+
+    if (preference !== 'light') {
+        document.body.classList.add(preference);
+    }
+    // Garante que o ícone inicial esteja correto
+    updateThemeToggleIcon(preference);
+}
+
+/**
+ * Atualiza o ícone do botão de alternância de tema.
+ * @param {string} theme - O tema ativo ('light', 'dark-mode', 'high-contrast-mode').
+ */
+function updateThemeToggleIcon(theme) {
+    const button = document.querySelector('.theme-toggle-btn');
+    if (button) {
+        let icon = '🌙'; // Padrão: Sugere ir para o Escuro
+        let label = 'Ativar modo escuro';
+
+        if (theme === 'dark-mode') {
+            icon = '⚙️'; // Sugere ir para o Alto Contraste
+            label = 'Ativar modo de alto contraste';
+        } else if (theme === 'high-contrast-mode') {
+            icon = '☀️'; // Sugere voltar para o Claro (ou Sol)
+            label = 'Voltar para modo claro';
+        } 
+        
+        button.innerHTML = icon;
+        button.setAttribute('aria-label', label);
+    }
+}
+
+// =======================================================
+// 7. Manipulação do DOM e Lógica de SPA (Navegação)
 // =======================================================
 
 /**
  * Função de navegação para o SPA Básico.
- * Carrega o conteúdo da página sem recarregar o navegador.
  */
 async function loadContent(path) {
     const contentArea = document.querySelector('main .wrapper');
 
-    // 1. Limpa o path: remove a barra inicial (/) se existir.
-    const cleanPath = path.replace(/^\//, '');
-
-    // 2. Determina a Rota
+    const cleanPath = path.replace(/^\//, '').replace(/^.*\//, ''); // Limpa e pega apenas o nome do arquivo
     const route = routes[cleanPath] || routes[''] || 'index.html';
 
-    // Garante que o container existe
     if (!contentArea) {
         console.error('Container de conteúdo (main .wrapper) não encontrado.');
         return; 
     }
 
     try {
-        // O fetch busca o arquivo HTML da rota
         const response = await fetch(route);
         
         if (!response.ok) {
@@ -190,11 +255,19 @@ async function loadContent(path) {
         if (newMainContent) {
             contentArea.innerHTML = newMainContent.innerHTML;
             
-            // Re-bind (re-ativa) todos os EventListeners, especialmente o formulário e as máscaras!
+            // Re-bind (re-ativa) todos os EventListeners, essencial para o formulário e temas!
             bindEvents(); 
             
             // Atualiza a URL no navegador
             window.history.pushState({ path: cleanPath }, '', cleanPath);
+
+            // 🚨 NOVO: Move o foco para o primeiro H1 ou H2 no novo conteúdo (Acessibilidade)
+            const newTitle = contentArea.querySelector('h1, h2');
+            if (newTitle) {
+                // Torna o título focável e move o foco
+                newTitle.setAttribute('tabindex', '-1'); 
+                newTitle.focus();
+            }
 
         } else {
             throw new Error("Não foi possível encontrar o conteúdo principal (main .wrapper) na nova página.");
@@ -206,58 +279,94 @@ async function loadContent(path) {
     }
 }
 
+
 /**
- * Função para configurar todos os EventListeners
+ * Função para configurar todos os EventListeners (chamada em cada troca de página do SPA)
  */
 function bindEvents() {
     // --- Lógica de SPA e Navegação ---
     document.querySelectorAll('nav a').forEach(link => {
-        if (!link.classList.contains('no-spa')) { 
-             link.addEventListener('click', (e) => {
-                // Previne o comportamento padrão (navegação)
-                e.preventDefault(); 
-                // Obtém o caminho do arquivo (ex: index.html)
-                const path = e.target.getAttribute('href'); 
-                // Navega para a nova rota e mantém apenas o caminho
-               loadContent(path); 
-                // Fecha o menu hamburger se estiver aberto
-                document.querySelector('nav').classList.remove('open');
-            });
-        }
+        // Remove listeners anteriores para evitar duplicação no SPA
+        link.removeEventListener('click', handleNavigation); 
+        link.addEventListener('click', handleNavigation);
     });
 
     // --- Lógica de Formulário (Cadastro) ---
     const form = document.querySelector('.form-container form');
     if (form) {
         // Ouvinte de submissão
+        form.removeEventListener('submit', handleFormSubmission);
         form.addEventListener('submit', handleFormSubmission);
         
-        // Ouvintes de Máscaras
-        document.getElementById('campo_cpf')?.addEventListener('input', (e) => {
-            e.target.value = maskCPF(e.target.value);
-        });
-        document.getElementById('campo_telefone')?.addEventListener('input', (e) => {
-            e.target.value = maskTelefone(e.target.value);
-        });
-        document.getElementById('campo_cep')?.addEventListener('input', (e) => {
-            e.target.value = maskCEP(e.target.value);
-        });
+        // Ouvintes de Máscaras (Garantindo que só haja um listener)
+        const cpfInput = document.getElementById('campo_cpf');
+        const telInput = document.getElementById('campo_telefone');
+        const cepInput = document.getElementById('campo_cep');
+
+        if (cpfInput) {
+            cpfInput.removeEventListener('input', applyMaskCPF);
+            cpfInput.addEventListener('input', applyMaskCPF);
+        }
+        if (telInput) {
+            telInput.removeEventListener('input', applyMaskTelefone);
+            telInput.addEventListener('input', applyMaskTelefone);
+        }
+        if (cepInput) {
+            cepInput.removeEventListener('input', applyMaskCEP);
+            cepInput.addEventListener('input', applyMaskCEP);
+        }
     }
+    
+    // --- Lógica de Menu Hamburguer ---
+    // Você precisará definir a função 'toggleMenu' em algum lugar do seu código
+    document.querySelector('.hamburger-menu')?.removeEventListener('click', toggleMenu);
+    document.querySelector('.hamburger-menu')?.addEventListener('click', toggleMenu);
+    
+    // --- Lógica de Modo Escuro/Alto Contraste: ATUALIZAÇÃO DO ÍCONE ---
+    // 🚨 CORREÇÃO APLICADA: Esta lógica garante que o ícone do tema seja redefinido
+    // corretamente após a troca de página no SPA, verificando os 3 estados.
+    let currentTheme = 'light';
+    if (document.body.classList.contains('dark-mode')) {
+        currentTheme = 'dark-mode';
+    } else if (document.body.classList.contains('high-contrast-mode')) {
+        currentTheme = 'high-contrast-mode';
+    }
+    updateThemeToggleIcon(currentTheme);
 }
 
-// =======================================================
-// 7. Inicialização da Aplicação
-// =======================================================
+// Funções auxiliares para os EventListeners de input (para remover/adicionar corretamente)
+function handleNavigation(e) {
+    e.preventDefault(); 
+    const path = e.target.getAttribute('href'); 
+    loadContent(path); 
+    document.querySelector('nav')?.classList.remove('open');
+}
 
-// A função toggleMenu (hambúrguer) é mantida no HTML para compatibilidade direta,
-// mas seria movida para cá em um projeto 100% JS.
+function applyMaskCPF(e) { e.target.value = maskCPF(e.target.value); }
+function applyMaskTelefone(e) { e.target.value = maskTelefone(e.target.value); }
+function applyMaskCEP(e) { e.target.value = maskCEP(e.target.value); }
+
+// Nota: A função 'toggleMenu' para o menu hamburger não está definida aqui. 
+// Certifique-se de que ela existe (se for usada). Exemplo:
+function toggleMenu() {
+    document.querySelector('nav').classList.toggle('open');
+}
+
+
+// =======================================================
+// 8. Inicialização da Aplicação
+// =======================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Configura os eventos iniciais
+    // 1. Carrega a preferência de tema *antes* de configurar outros eventos
+    loadThemePreference(); 
+    
+    // 2. Configura os eventos iniciais
     bindEvents();
     
-    // Configura o botão de 'Voltar' do navegador para o SPA
+    // 3. Configura o botão de 'Voltar' do navegador para o SPA
     window.onpopstate = () => {
+        // Pega a URL atual e carrega o conteúdo correspondente
         loadContent(window.location.pathname);
     };
 });
